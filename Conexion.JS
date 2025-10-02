@@ -3,12 +3,7 @@ class WeatherbitAPI {
     this.apiKey = apiKey;
     this.baseUrl = "https://api.weatherbit.io/v2.0";
   }
-
-
-
-
                                 //METODOS
-  
   // Clima por ciudad
   async getWeatherByCity(city, countryCode = "MX", lang = "es") {
     const url = `${this.baseUrl}/current?city=${city}&country=${countryCode}&lang=${lang}&key=${this.apiKey}`;
@@ -41,7 +36,6 @@ const apiKey = "4deb71f7508d4e23a10d807f9fa5ecfa";      //clave de la api
 const weatherAPI = new WeatherbitAPI(apiKey);
 
 // pruebas de datos crudos
-
 (async () => {
   console.log("=== Clima en Ciudad de México ===");
   const climaCDMX = await weatherAPI.getWeatherByCity("Mexico City");
