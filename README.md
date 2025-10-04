@@ -30,11 +30,11 @@ Este proyecto está desarrollado con tecnologías web estándar y un framework C
 
 ## Colaboradores
 
-- .  
-- .  
-- .  
-- .  
-- .
+- [Brayan Jair Garcia Mayorga (JairGaMa)](https://github.com/JairGaMa)  
+-  
+- 
+- 
+- 
 
 ---
 
