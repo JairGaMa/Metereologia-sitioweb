@@ -39,6 +39,38 @@ class WeatherbitAPI {
     return this.fetchData(url);
   }
 
+  // *** Nueva función para obtener datos climáticos específicos por coordenadas ***
+  async getWeatherDataByCoords(lat, lon, lang = "es") {
+    try {
+      const data = await this.getWeatherByCoords(lat, lon, lang);
+      
+      // Validar que la respuesta tenga los datos esperados
+      if (!data || !data.data || !Array.isArray(data.data) || data.data.length === 0) {
+        throw new Error("No se encontraron datos meteorológicos para las coordenadas proporcionadas.");
+      }
+
+      const weather = data.data[0];
+      
+      // Retornar solo los datos solicitados en un objeto estructurado
+      return {
+        temperatura: weather.temp,
+        sensacion_termica: weather.app_temp,
+        descripcion: weather.weather.description,
+        humedad: weather.rh,
+        presion: weather.pres,
+        viento: weather.wind_spd,
+        direccion_viento: weather.wind_cdir,
+        indice_uv: weather.uv,
+        nubosidad: weather.clouds,
+        salida_sol: weather.sunrise,
+        puesta_sol: weather.sunset
+      };
+    } catch (error) {
+      // Propagar el error con un mensaje claro
+      throw new Error(`Error al obtener datos climáticos por coordenadas: ${error.message}`);
+    }
+  }
+
   // Control de errores mejorado
   async fetchData(url) {
     try {
@@ -118,6 +150,21 @@ function displayWeather(data, locationType) {
   console.log(`Puesta del sol: ${weather.sunset}`);
 }
 
+// *** Función para mostrar los datos climáticos específicos retornados por getWeatherDataByCoords ***
+function displayWeatherDataByCoords(weatherData) {
+  console.log(`=== Datos climáticos ===`);
+  console.log(`Temperatura: ${weatherData.temperatura}°C`);
+  console.log(`Sensación térmica: ${weatherData.sensacion_termica}°C`);
+  console.log(`Descripción: ${weatherData.descripcion}`);
+  console.log(`Humedad: ${weatherData.humedad}%`);
+  console.log(`Presión: ${weatherData.presion} mb`);
+  console.log(`Viento: ${weatherData.viento} m/s, dirección ${weatherData.direccion_viento}`);
+  console.log(`Índice UV: ${weatherData.indice_uv}`);
+  console.log(`Nubosidad: ${weatherData.nubosidad}%`);
+  console.log(`Salida del sol: ${weatherData.salida_sol}`);
+  console.log(`Puesta del sol: ${weatherData.puesta_sol}`);
+}
+
 // Función para manejar errores de forma amigable
 function handleError(error, context = "") {
   const prefix = context ? `Error al obtener el clima ${context}:` : "Error:";
@@ -139,7 +186,7 @@ function handleError(error, context = "") {
 const apiKey = "4deb71f7508d4e23a10d807f9fa5ecfa";
 const weatherAPI = new WeatherbitAPI(apiKey);
 
-// Pruebas
+// ***Pruebas***
 (async () => {
   try {
     console.log("=== Clima en Ciudad de México ===");
@@ -149,6 +196,60 @@ const weatherAPI = new WeatherbitAPI(apiKey);
     console.log("\n=== Clima en Mante (coordenadas) ===");
     const climaMerida = await weatherAPI.getWeatherByCoords(22.7421938, -98.9746578);
     displayWeather(climaMerida, "por coordenadas");
+    
+    console.log("\n=== Datos climáticos en Mante (nueva función por coordenadas) ===");
+    const weatherDataMante = await weatherAPI.getWeatherDataByCoords(22.7421938, -98.9746578);
+    displayWeatherDataByCoords(weatherDataMante);
+    
+    // *** Pruebas para la nueva función getWeatherDataByCoords ***
+    console.log("\n=== Pruebas para getWeatherDataByCoords ===");
+    
+    // Test 1: Coordenadas válidas (Ciudad de México: 19.4326, -99.1332)
+    console.log("\nTest 1: Coordenadas válidas (Ciudad de México)");
+    try {
+      const weatherDataCDMX = await weatherAPI.getWeatherDataByCoords(19.4326, -99.1332);
+      console.log("Éxito: Datos obtenidos correctamente");
+      displayWeatherDataByCoords(weatherDataCDMX);
+      // Verificar que todos los campos esperados están presentes
+      const expectedFields = [
+        'temperatura', 'sensacion_termica', 'descripcion', 'humedad', 'presion',
+        'viento', 'direccion_viento', 'indice_uv', 'nubosidad', 'salida_sol', 'puesta_sol'
+      ];
+      const missingFields = expectedFields.filter(field => !(field in weatherDataCDMX));
+      if (missingFields.length === 0) {
+        console.log("Éxito: Todos los campos esperados están presentes");
+      } else {
+        console.error(`Error: Faltan los campos: ${missingFields.join(', ')}`);
+      }
+    } catch (error) {
+      console.error("Fallo en Test 1:", error.message);
+    }
+    
+    // Test 2: Coordenadas inválidas (latitud fuera de rango)
+    console.log("\nTest 2: Coordenadas inválidas (latitud fuera de rango)");
+    try {
+      await weatherAPI.getWeatherDataByCoords(100, -99.1332);
+      console.error("Fallo: Se esperaba un error por latitud inválida");
+    } catch (error) {
+      if (error.message.includes("La latitud debe estar entre -90 y 90")) {
+        console.log("Éxito: Error manejado correctamente para latitud inválida");
+      } else {
+        console.error("Fallo en Test 2:", error.message);
+      }
+    }
+    
+    // Test 3: Coordenadas inválidas (longitud fuera de rango)
+    console.log("\nTest 3: Coordenadas inválidas (longitud fuera de rango)");
+    try {
+      await weatherAPI.getWeatherDataByCoords(19.4326, -200);
+      console.error("Fallo: Se esperaba un error por longitud inválida");
+    } catch (error) {
+      if (error.message.includes("La longitud debe estar entre -180 y 180")) {
+        console.log("Éxito: Error manejado correctamente para longitud inválida");
+      } else {
+        console.error("Fallo en Test 3:", error.message);
+      }
+    }
     
   } catch (error) {
     handleError(error);
