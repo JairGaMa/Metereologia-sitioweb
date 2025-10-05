@@ -154,3 +154,5 @@ const weatherAPI = new WeatherbitAPI(apiKey);
     handleError(error);
   }
 })();
+
+//comentrio de ejemplo
