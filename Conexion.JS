@@ -1,70 +1,90 @@
-//Proyecto de Clima en Sitio Web - Dragones.
-class WeatherbitAPI {
-  constructor(apiKey) {
-    this.apiKey = apiKey;
-    this.baseUrl = "https://api.weatherbit.io/v2.0";
+// Proyecto de Clima en Sitio Web - Dragones.
+class ClimaWeatherbit {
+  constructor(claveApi) {
+    this.claveApi = claveApi;
+    this.urlBase = "https://api.weatherbit.io/v2.0";
   }
 
-  // Clima por coordenadas
-  async getWeatherByCoords(lat, lon, lang = "es") {
-    if (typeof lat !== 'number' || typeof lon !== 'number') {
-      throw new Error("Las coordenadas deben ser números válidos");
+  // Obtener clima por coordenadas
+  async obtenerClimaPorCoordenadas(latitud, longitud, idioma = "es", unidades = "M") {
+    if (typeof latitud !== 'number' || typeof longitud !== 'number') {
+      throw new Error("Las coordenadas deben ser números válidos.");
     }
-    if (lat < -90 || lat > 90) {
-      throw new Error("La latitud debe estar entre -90 y 90");
+    if (latitud < -90 || latitud > 90) {
+      throw new Error("La latitud debe estar entre -90 y 90.");
     }
-    if (lon < -180 || lon > 180) {
-      throw new Error("La longitud debe estar entre -180 y 180");
+    if (longitud < -180 || longitud > 180) {
+      throw new Error("La longitud debe estar entre -180 y 180.");
     }
 
-    const url = `${this.baseUrl}/current?lat=${lat}&lon=${lon}&lang=${lang}&key=${this.apiKey}`;
-    return this.fetchData(url);
+    const url = `${this.urlBase}/current?lat=${latitud}&lon=${longitud}&lang=${idioma}&units=${unidades}&key=${this.claveApi}`;
+    return this.obtenerDatos(url);
   }
 
-  // Obtener datos climáticos específicos por coordenadas
-  async getWeatherDataByCoords(lat, lon, lang = "es") {
+  // Obtener datos meteorológicos específicos por coordenadas
+  async obtenerDatosClimaticosPorCoordenadas(latitud, longitud, idioma = "es") {
     try {
-      const data = await this.getWeatherByCoords(lat, lon, lang);
-      if (!data || !data.data || !Array.isArray(data.data) || data.data.length === 0) {
+      const datos = await this.obtenerClimaPorCoordenadas(latitud, longitud, idioma);
+      if (!datos || !datos.data || !Array.isArray(datos.data) || datos.data.length === 0) {
         throw new Error("No se encontraron datos meteorológicos para las coordenadas proporcionadas.");
       }
 
-      const weather = data.data[0];
+      const clima = datos.data[0];
+      const velocidadVientoKmh = (clima.wind_spd * 3.6).toFixed(1);
+
+      // === Conversión de hora UTC a hora local de México ===
+      const convertirAHoraLocalMexico = (horaUTC, fechaStr) => {
+        const [anio, mes, dia] = fechaStr.split(" ")[0].split("-");
+        const [hora, minuto] = horaUTC.split(":");
+        const fechaUTC = new Date(Date.UTC(anio, mes - 1, dia, hora, minuto));
+
+        return new Intl.DateTimeFormat("es-MX", {
+          timeZone: "America/Mexico_City",
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false
+        }).format(fechaUTC);
+      };
+
+      const salidaSol = convertirAHoraLocalMexico(clima.sunrise, clima.ob_time);
+      const puestaSol = convertirAHoraLocalMexico(clima.sunset, clima.ob_time);
+
       return {
-        temperatura: weather.temp,
-        sensacion_termica: weather.app_temp,
-        descripcion: weather.weather.description,
-        humedad: weather.rh,
-        presion: weather.pres,
-        viento: weather.wind_spd,
-        direccion_viento: weather.wind_cdir,
-        indice_uv: weather.uv,
-        nubosidad: weather.clouds,
-        salida_sol: weather.sunrise,
-        puesta_sol: weather.sunset
+        ciudad: clima.city_name,
+        temperatura: `${clima.temp.toFixed(1)} °C`,
+        sensacion_termica: `${clima.app_temp.toFixed(1)} °C`,
+        descripcion: clima.weather.description,
+        humedad: `${clima.rh}%`,
+        presion: `${clima.pres.toFixed(1)} hPa`,
+        viento: `${velocidadVientoKmh} km/h`,
+        direccion_viento: clima.wind_cdir_full,
+        indice_uv: clima.uv,
+        nubosidad: `${clima.clouds}%`,
+        salida_sol: salidaSol,
+        puesta_sol: puestaSol
       };
     } catch (error) {
       throw new Error(`Error al obtener datos climáticos por coordenadas: ${error.message}`);
     }
   }
 
-  // Método para realizar la solicitud a la API
-  async fetchData(url) {
+  // Realizar la solicitud a la API
+  async obtenerDatos(url) {
     try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 10000);
-      const response = await fetch(url, { signal: controller.signal });
-      clearTimeout(timeoutId);
+      const controlador = new AbortController();
+      const tiempoDeEspera = setTimeout(() => controlador.abort(), 10000);
+      const respuesta = await fetch(url, { signal: controlador.signal });
+      clearTimeout(tiempoDeEspera);
 
-      if (!response.ok) {
-        throw new Error(`Error en la petición: ${response.status} ${response.statusText}`);
+      if (!respuesta.ok) {
+        throw new Error(`Error en la petición: ${respuesta.status} ${respuesta.statusText}`);
       }
 
-      const data = await response.json();
-      if (!data || !data.data || !Array.isArray(data.data) || data.data.length === 0) {
+      const datos = await respuesta.json();
+      if (!datos || !datos.data || !Array.isArray(datos.data) || datos.data.length === 0) {
         throw new Error("Respuesta de la API inválida o sin datos meteorológicos.");
       }
-      return data;
+      return datos;
     } catch (error) {
       if (error.name === 'AbortError') {
         throw new Error("La solicitud tardó demasiado tiempo. Verifica tu conexión a internet.");
@@ -74,38 +94,26 @@ class WeatherbitAPI {
   }
 }
 
-// Pruebas para la función getWeatherDataByCoords
+// === Pruebas ===
 (async () => {
-  const apiKey = "4deb71f7508d4e23a10d807f9fa5ecfa";
-  const weatherAPI = new WeatherbitAPI(apiKey);
+  const claveApi = "4deb71f7508d4e23a10d807f9fa5ecfa";
+  const climaAPI = new ClimaWeatherbit(claveApi);
 
-  console.log("\n=== Pruebas para getWeatherDataByCoords ===");
+  console.log("\n=== Pruebas para obtenerDatosClimaticosPorCoordenadas ===");
 
-  // Test 1: Coordenadas válidas
-  console.log("\nTest 1: Coordenadas válidas (Ciudad de México)");
   try {
-    const weatherDataCDMX = await weatherAPI.getWeatherDataByCoords(19.4326, -99.1332);
-    console.log("Éxito: Datos obtenidos correctamente");
-    console.log(weatherDataCDMX);
+    const climaCDMX = await climaAPI.obtenerDatosClimaticosPorCoordenadas(19.4326, -99.1332);
+    console.log("Datos del clima (Ciudad de México - formato México con hora local):");
+    console.log(climaCDMX);
   } catch (error) {
-    console.error("Fallo en Test 1:", error.message);
+    console.error("Error en Ciudad de México:", error.message);
   }
 
-  // Test 2: Coordenadas inválidas (latitud fuera de rango)
-  console.log("\nTest 2: Coordenadas inválidas (latitud fuera de rango)");
   try {
-    await weatherAPI.getWeatherDataByCoords(100, -99.1332);
-    console.error("Fallo: Se esperaba un error por latitud inválida");
+    const climaMante = await climaAPI.obtenerDatosClimaticosPorCoordenadas(22.7411, -98.9736);
+    console.log("\nDatos del clima en Ciudad Mante, Tamaulipas:");
+    console.log(climaMante);
   } catch (error) {
-    console.log("Éxito: Error manejado correctamente para latitud inválida");
-  }
-
-  // Test 3: Coordenadas inválidas (longitud fuera de rango)
-  console.log("\nTest 3: Coordenadas inválidas (longitud fuera de rango)");
-  try {
-    await weatherAPI.getWeatherDataByCoords(19.4326, -200);
-    console.error("Fallo: Se esperaba un error por longitud inválida");
-  } catch (error) {
-    console.log("Éxito: Error manejado correctamente para longitud inválida");
+    console.error("Error en Ciudad Mante:", error.message);
   }
 })();
