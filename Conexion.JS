@@ -21,7 +21,7 @@ class ClimaWeatherbit {
     return this.obtenerDatos(url);
   }
 
-  // Obtener datos meteorológicos específicos por coordenadas
+  // Obtener datos meteorológicos completos
   async obtenerDatosClimaticosPorCoordenadas(latitud, longitud, idioma = "es") {
     try {
       const datos = await this.obtenerClimaPorCoordenadas(latitud, longitud, idioma);
@@ -68,6 +68,26 @@ class ClimaWeatherbit {
     }
   }
 
+  // === NUEVAS FUNCIONES SOLICITADAS ===
+
+  // Obtener solo la temperatura
+  async obtenerTemperatura(latitud, longitud) {
+    const datos = await this.obtenerDatosClimaticosPorCoordenadas(latitud, longitud);
+    return datos.temperatura;
+  }
+
+  // Obtener solo la sensación térmica
+  async obtenerSensacionTermica(latitud, longitud) {
+    const datos = await this.obtenerDatosClimaticosPorCoordenadas(latitud, longitud);
+    return datos.sensacion_termica;
+  }
+
+  // Obtener solo la descripción del clima
+  async obtenerDescripcion(latitud, longitud) {
+    const datos = await this.obtenerDatosClimaticosPorCoordenadas(latitud, longitud);
+    return datos.descripcion;
+  }
+
   // Realizar la solicitud a la API
   async obtenerDatos(url) {
     try {
@@ -94,26 +114,23 @@ class ClimaWeatherbit {
   }
 }
 
-// === Pruebas ===
+// === PRUEBA RÁPIDA ===
 (async () => {
-  const claveApi = "4deb71f7508d4e23a10d807f9fa5ecfa";
-  const climaAPI = new ClimaWeatherbit(claveApi);
+  const apiKey = "4deb71f7508d4e23a10d807f9fa5ecfa";
+  const climaAPI = new ClimaWeatherbit(apiKey);
 
-  console.log("\n=== Pruebas para obtenerDatosClimaticosPorCoordenadas ===");
+  // Ciudad Mante, Tamaulipas
+  const lat = 22.7411; 
+  const lon = -98.9736;
 
-  try {
-    const climaCDMX = await climaAPI.obtenerDatosClimaticosPorCoordenadas(19.4326, -99.1332);
-    console.log("Datos del clima (Ciudad de México - formato México con hora local):");
-    console.log(climaCDMX);
-  } catch (error) {
-    console.error("Error en Ciudad de México:", error.message);
-  }
+  //solo una funcion que llama a la API y obtiene todos los datos, más eficiente y recomendable
+  const datosClima = await climaAPI.obtenerDatosClimaticosPorCoordenadas(lat, lon);
+  console.log("Temperatura:", datosClima.temperatura);
+  console.log("Sensación térmica:", datosClima.sensacion_termica);
+  console.log("Descripción:", datosClima.descripcion);
 
-  try {
-    const climaMante = await climaAPI.obtenerDatosClimaticosPorCoordenadas(22.7411, -98.9736);
-    console.log("\nDatos del clima en Ciudad Mante, Tamaulipas:");
-    console.log(climaMante);
-  } catch (error) {
-    console.error("Error en Ciudad Mante:", error.message);
-  }
+  //cada funcion hace una llamada a la API, no es eficiente pero es lo que se pidió
+  console.log("Temperatura:", await climaAPI.obtenerTemperatura(lat, lon));
+  console.log("Sensación térmica:", await climaAPI.obtenerSensacionTermica(lat, lon));
+  console.log("Descripción:", await climaAPI.obtenerDescripcion(lat, lon));
 })();
