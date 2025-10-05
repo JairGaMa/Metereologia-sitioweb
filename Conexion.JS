@@ -155,4 +155,3 @@ const weatherAPI = new WeatherbitAPI(apiKey);
   }
 })();
 
-//
