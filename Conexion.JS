@@ -88,6 +88,8 @@ class ClimaWeatherbit {
     return datos.descripcion;
   }
 
+  //agregar las 3 funciones aqui
+
   // Realizar la solicitud a la API
   async obtenerDatos(url) {
     try {
