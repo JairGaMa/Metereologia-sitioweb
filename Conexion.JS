@@ -129,6 +129,7 @@ class ClimaWeatherbit {
     const datos = await this.obtenerDatosClimaticosPorCoordenadas(latitud, longitud);
     return datos.indice_uv;
   }
+
 // carlos
 // Obtener solo la humedad
 async obtenerHumedad(latitud, longitud) {
@@ -209,5 +210,11 @@ async obtenerVisibilidad(latitud, longitud) {
   console.log("Velocidad del viento:", await climaAPI.obtenerVelocidadViento(lat, lon)); // W
   console.log("Dirección del viento:", await climaAPI.obtenerDireccionViento(lat, lon)); // W
   console.log("Índice UV:", await climaAPI.obtenerIndiceUV(lat, lon)); // W
+
+  //PRUEBAS FUNCIONES - CARLOS
+console.log("Humedad:", await climaAPI.obtenerHumedad(lat, lon));
+console.log("Presión atmosférica:", await climaAPI.obtenerPresion(lat, lon));
+console.log("Visibilidad:", await climaAPI.obtenerVisibilidad(lat, lon)); // Asegúrate de haber agregado 'visibilidad' correctamente al return
+
 
 })();
