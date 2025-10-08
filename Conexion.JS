@@ -153,6 +153,42 @@ async obtenerVisibilidad(latitud, longitud) {
 }
 
 // galdino
+// === Manejador de errores para coordenadas no encontradas o inválidas ===
+async manejarErrorCoordenadas(latitud, longitud) {
+  try {
+    // Validar que las coordenadas sean números válidos
+    if (typeof latitud !== 'number' || typeof longitud !== 'number' || isNaN(latitud) || isNaN(longitud)) {
+      throw new Error("Las coordenadas deben ser valores numéricos válidos.");
+    }
+
+    // Validar que las coordenadas estén dentro del rango permitido
+    if (latitud < -90 || latitud > 90) {
+      throw new Error("La latitud debe estar entre -90° y 90°.");
+    }
+    if (longitud < -180 || longitud > 180) {
+      throw new Error("La longitud debe estar entre -180° y 180°.");
+    }
+
+    // Si las coordenadas son válidas, intentamos obtener datos
+    const datos = await this.obtenerDatosClimaticosPorCoordenadas(latitud, longitud);
+    if (!datos) {
+      throw new Error("No se pudieron obtener datos para las coordenadas proporcionadas.");
+    }
+
+    // Retornar datos si todo va bien
+    return datos;
+
+  } catch (error) {
+    // Mostrar mensaje claro al usuario
+    console.error(" Error en la obtención de coordenadas:", error.message);
+
+    // Mostrar mensaje visual (puedes reemplazar alert por un mensaje en el DOM si hay interfaz)
+    alert(` ${error.message} \nVerifica tu conexión o las coordenadas ingresadas.`);
+
+    // Retornar null para que el flujo no se rompa
+    return null;
+  }
+}
 
 
 
@@ -215,6 +251,11 @@ async obtenerVisibilidad(latitud, longitud) {
 console.log("Humedad:", await climaAPI.obtenerHumedad(lat, lon));
 console.log("Presión atmosférica:", await climaAPI.obtenerPresion(lat, lon));
 console.log("Visibilidad:", await climaAPI.obtenerVisibilidad(lat, lon)); // Asegúrate de haber agregado 'visibilidad' correctamente al return
+
+//PRUEBA DE MANEJADOR DE ERRORES - GALDINO
+console.log("=== Prueba con coordenadas inválidas ===");
+await climaAPI.manejarErrorCoordenadas("abc", null); // probar error de tipo
+await climaAPI.manejarErrorCoordenadas(150, -200);  // probar error de rango
 
 
 })();
