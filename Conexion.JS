@@ -89,6 +89,26 @@ class ClimaWeatherbit {
   }
 
   //agregar las 3 funciones aqui
+   // Obtener solo la nubosidad
+  async obtenerNubosidad(latitud, longitud) {
+    const datos = await this.obtenerDatosClimaticosPorCoordenadas(latitud, longitud);
+    return datos.nubosidad;
+  }
+
+  // Obtener solo la salida del sol
+  async obtenerSalidaDelSol(latitud, longitud) {
+    const datos = await this.obtenerDatosClimaticosPorCoordenadas(latitud, longitud);
+    return datos.salida_sol;
+  }
+
+  // Obtener solo la puesta del sol
+  async obtenerPuestaDelSol(latitud, longitud) {
+    const datos = await this.obtenerDatosClimaticosPorCoordenadas(latitud, longitud);
+    return datos.puesta_sol;
+  }
+
+
+
 
   // Realizar la solicitud a la API
   async obtenerDatos(url) {
@@ -126,13 +146,16 @@ class ClimaWeatherbit {
   const lon = -98.9736;
 
   //solo una funcion que llama a la API y obtiene todos los datos, más eficiente y recomendable
-  const datosClima = await climaAPI.obtenerDatosClimaticosPorCoordenadas(lat, lon);
+  /*const datosClima = await climaAPI.obtenerDatosClimaticosPorCoordenadas(lat, lon);
   console.log("Temperatura:", datosClima.temperatura);
   console.log("Sensación térmica:", datosClima.sensacion_termica);
-  console.log("Descripción:", datosClima.descripcion);
+  console.log("Descripción:", datosClima.descripcion);*/
 
   //cada funcion hace una llamada a la API, no es eficiente pero es lo que se pidió
   console.log("Temperatura:", await climaAPI.obtenerTemperatura(lat, lon));
   console.log("Sensación térmica:", await climaAPI.obtenerSensacionTermica(lat, lon));
   console.log("Descripción:", await climaAPI.obtenerDescripcion(lat, lon));
+  console.log("Nubosidad:", await climaAPI.obtenerNubosidad(lat, lon));
+  console.log("Salida del sol:", await climaAPI.obtenerSalidaDelSol(lat, lon));
+  console.log("Puesta del sol:", await climaAPI.obtenerPuestaDelSol(lat, lon));
 })();
