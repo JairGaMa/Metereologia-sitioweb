@@ -129,6 +129,29 @@ class ClimaWeatherbit {
     const datos = await this.obtenerDatosClimaticosPorCoordenadas(latitud, longitud);
     return datos.indice_uv;
   }
+// carlos
+// Obtener solo la humedad
+async obtenerHumedad(latitud, longitud) {
+  // C: Nueva función añadida para retornar únicamente la humedad.
+  const datos = await this.obtenerDatosClimaticosPorCoordenadas(latitud, longitud);
+  return datos.humedad;
+}
+
+// Obtener solo la presión
+async obtenerPresion(latitud, longitud) {
+  // C: Nueva función añadida para retornar únicamente la presión atmosférica.
+  const datos = await this.obtenerDatosClimaticosPorCoordenadas(latitud, longitud);
+  return datos.presion;
+}
+
+// Obtener solo la visibilidad
+async obtenerVisibilidad(latitud, longitud) {
+  // C: Nueva función añadida para retornar únicamente la visibilidad.
+  const datos = await this.obtenerDatosClimaticosPorCoordenadas(latitud, longitud);
+  return datos.visibilidad;
+}
+
+// galdino
 
 
 
