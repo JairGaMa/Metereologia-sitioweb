@@ -89,7 +89,7 @@ class ClimaWeatherbit {
   }
 
   //agregar las 3 funciones aqui
-   // Obtener solo la nubosidad
+  // Obtener solo la nubosidad
   async obtenerNubosidad(latitud, longitud) {
     const datos = await this.obtenerDatosClimaticosPorCoordenadas(latitud, longitud);
     return datos.nubosidad;
@@ -107,6 +107,28 @@ class ClimaWeatherbit {
     return datos.puesta_sol;
   }
 
+  //Mostrar viento, direccion e indice UV. (W_)
+  // Crear una función que retorne solamente la velocidad del viento. (W)
+  async obtenerVelocidadViento(latitud, longitud) {
+    // W: Nueva función añadida para retornar únicamente la velocidad del viento.
+    const datos = await this.obtenerDatosClimaticosPorCoordenadas(latitud, longitud);
+    // datos.viento ya viene formateado como string con "km/h" desde obtenerDatosClimaticosPorCoordenadas
+    return datos.viento;
+  }
+
+  // Crear una función que retorne solamente la dirección del viento. (W)
+  async obtenerDireccionViento(latitud, longitud) {
+    // W: Nueva función añadida para retornar únicamente la dirección del viento.
+    const datos = await this.obtenerDatosClimaticosPorCoordenadas(latitud, longitud);
+    return datos.direccion_viento;
+  }
+
+  // Crear una función que retorne solamente el índice UV. (W)
+  async obtenerIndiceUV(latitud, longitud) {
+    // W: Nueva función añadida para retornar únicamente el índice UV (valor numérico).
+    const datos = await this.obtenerDatosClimaticosPorCoordenadas(latitud, longitud);
+    return datos.indice_uv;
+  }
 
 
 
@@ -158,4 +180,11 @@ class ClimaWeatherbit {
   console.log("Nubosidad:", await climaAPI.obtenerNubosidad(lat, lon));
   console.log("Salida del sol:", await climaAPI.obtenerSalidaDelSol(lat, lon));
   console.log("Puesta del sol:", await climaAPI.obtenerPuestaDelSol(lat, lon));
+
+  
+// Pruebas de las nuevas funciones W
+  console.log("Velocidad del viento:", await climaAPI.obtenerVelocidadViento(lat, lon)); // W
+  console.log("Dirección del viento:", await climaAPI.obtenerDireccionViento(lat, lon)); // W
+  console.log("Índice UV:", await climaAPI.obtenerIndiceUV(lat, lon)); // W
+
 })();
