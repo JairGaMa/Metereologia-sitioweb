@@ -7,7 +7,7 @@ class ClimaWeatherbit {
 
   // Obtener clima por coordenadas
   async obtenerClimaPorCoordenadas(latitud, longitud, idioma = "es", unidades = "M") {
-    if (typeof latitud !== 'number' || typeof longitud !== 'number') {
+    if (typeof latitud !== "number" || typeof longitud !== "number") {
       throw new Error("Las coordenadas deben ser números válidos.");
     }
     if (latitud < -90 || latitud > 90) {
@@ -32,7 +32,7 @@ class ClimaWeatherbit {
       const clima = datos.data[0];
       const velocidadVientoKmh = (clima.wind_spd * 3.6).toFixed(1);
 
-      // === Conversión de hora UTC a hora local de México ===
+      // Conversión de hora UTC a hora local de México
       const convertirAHoraLocalMexico = (horaUTC, fechaStr) => {
         const [anio, mes, dia] = fechaStr.split(" ")[0].split("-");
         const [hora, minuto] = horaUTC.split(":");
@@ -68,130 +68,6 @@ class ClimaWeatherbit {
     }
   }
 
-  // === NUEVAS FUNCIONES SOLICITADAS ===
-
-  // Obtener solo la temperatura
-  async obtenerTemperatura(latitud, longitud) {
-    const datos = await this.obtenerDatosClimaticosPorCoordenadas(latitud, longitud);
-    return datos.temperatura;
-  }
-
-  // Obtener solo la sensación térmica
-  async obtenerSensacionTermica(latitud, longitud) {
-    const datos = await this.obtenerDatosClimaticosPorCoordenadas(latitud, longitud);
-    return datos.sensacion_termica;
-  }
-
-  // Obtener solo la descripción del clima
-  async obtenerDescripcion(latitud, longitud) {
-    const datos = await this.obtenerDatosClimaticosPorCoordenadas(latitud, longitud);
-    return datos.descripcion;
-  }
-
-  //agregar las 3 funciones aqui
-  // Obtener solo la nubosidad
-  async obtenerNubosidad(latitud, longitud) {
-    const datos = await this.obtenerDatosClimaticosPorCoordenadas(latitud, longitud);
-    return datos.nubosidad;
-  }
-
-  // Obtener solo la salida del sol
-  async obtenerSalidaDelSol(latitud, longitud) {
-    const datos = await this.obtenerDatosClimaticosPorCoordenadas(latitud, longitud);
-    return datos.salida_sol;
-  }
-
-  // Obtener solo la puesta del sol
-  async obtenerPuestaDelSol(latitud, longitud) {
-    const datos = await this.obtenerDatosClimaticosPorCoordenadas(latitud, longitud);
-    return datos.puesta_sol;
-  }
-
-  //Mostrar viento, direccion e indice UV. (W_)
-  // Crear una función que retorne solamente la velocidad del viento. (W)
-  async obtenerVelocidadViento(latitud, longitud) {
-    // W: Nueva función añadida para retornar únicamente la velocidad del viento.
-    const datos = await this.obtenerDatosClimaticosPorCoordenadas(latitud, longitud);
-    // datos.viento ya viene formateado como string con "km/h" desde obtenerDatosClimaticosPorCoordenadas
-    return datos.viento;
-  }
-
-  // Crear una función que retorne solamente la dirección del viento. (W)
-  async obtenerDireccionViento(latitud, longitud) {
-    // W: Nueva función añadida para retornar únicamente la dirección del viento.
-    const datos = await this.obtenerDatosClimaticosPorCoordenadas(latitud, longitud);
-    return datos.direccion_viento;
-  }
-
-  // Crear una función que retorne solamente el índice UV. (W)
-  async obtenerIndiceUV(latitud, longitud) {
-    // W: Nueva función añadida para retornar únicamente el índice UV (valor numérico).
-    const datos = await this.obtenerDatosClimaticosPorCoordenadas(latitud, longitud);
-    return datos.indice_uv;
-  }
-
-// carlos
-// Obtener solo la humedad
-async obtenerHumedad(latitud, longitud) {
-  // C: Nueva función añadida para retornar únicamente la humedad.
-  const datos = await this.obtenerDatosClimaticosPorCoordenadas(latitud, longitud);
-  return datos.humedad;
-}
-
-// Obtener solo la presión
-async obtenerPresion(latitud, longitud) {
-  // C: Nueva función añadida para retornar únicamente la presión atmosférica.
-  const datos = await this.obtenerDatosClimaticosPorCoordenadas(latitud, longitud);
-  return datos.presion;
-}
-
-// Obtener solo la visibilidad
-async obtenerVisibilidad(latitud, longitud) {
-  // C: Nueva función añadida para retornar únicamente la visibilidad.
-  const datos = await this.obtenerDatosClimaticosPorCoordenadas(latitud, longitud);
-  return datos.visibilidad;
-}
-
-// galdino
-// === Manejador de errores para coordenadas no encontradas o inválidas ===
-async manejarErrorCoordenadas(latitud, longitud) {
-  try {
-    // Validar que las coordenadas sean números válidos
-    if (typeof latitud !== 'number' || typeof longitud !== 'number' || isNaN(latitud) || isNaN(longitud)) {
-      throw new Error("Las coordenadas deben ser valores numéricos válidos.");
-    }
-
-    // Validar que las coordenadas estén dentro del rango permitido
-    if (latitud < -90 || latitud > 90) {
-      throw new Error("La latitud debe estar entre -90° y 90°.");
-    }
-    if (longitud < -180 || longitud > 180) {
-      throw new Error("La longitud debe estar entre -180° y 180°.");
-    }
-
-    // Si las coordenadas son válidas, intentamos obtener datos
-    const datos = await this.obtenerDatosClimaticosPorCoordenadas(latitud, longitud);
-    if (!datos) {
-      throw new Error("No se pudieron obtener datos para las coordenadas proporcionadas.");
-    }
-
-    // Retornar datos si todo va bien
-    return datos;
-
-  } catch (error) {
-    // Mostrar mensaje claro al usuario
-    console.error(" Error en la obtención de coordenadas:", error.message);
-
-    // Mostrar mensaje visual (puedes reemplazar alert por un mensaje en el DOM si hay interfaz)
-    alert(` ${error.message} \nVerifica tu conexión o las coordenadas ingresadas.`);
-
-    // Retornar null para que el flujo no se rompa
-    return null;
-  }
-}
-
-
-
   // Realizar la solicitud a la API
   async obtenerDatos(url) {
     try {
@@ -210,7 +86,7 @@ async manejarErrorCoordenadas(latitud, longitud) {
       }
       return datos;
     } catch (error) {
-      if (error.name === 'AbortError') {
+      if (error.name === "AbortError") {
         throw new Error("La solicitud tardó demasiado tiempo. Verifica tu conexión a internet.");
       }
       throw new Error(`Error al obtener datos meteorológicos: ${error.message}`);
@@ -218,44 +94,21 @@ async manejarErrorCoordenadas(latitud, longitud) {
   }
 }
 
-// === PRUEBA RÁPIDA ===
+// === PRUEBA ===
+/*
 (async () => {
   const apiKey = "4deb71f7508d4e23a10d807f9fa5ecfa";
   const climaAPI = new ClimaWeatherbit(apiKey);
 
   // Ciudad Mante, Tamaulipas
-  const lat = 22.7411; 
+  const lat = 22.7411;
   const lon = -98.9736;
 
-  //solo una funcion que llama a la API y obtiene todos los datos, más eficiente y recomendable
-  /*const datosClima = await climaAPI.obtenerDatosClimaticosPorCoordenadas(lat, lon);
-  console.log("Temperatura:", datosClima.temperatura);
-  console.log("Sensación térmica:", datosClima.sensacion_termica);
-  console.log("Descripción:", datosClima.descripcion);*/
-
-  //cada funcion hace una llamada a la API, no es eficiente pero es lo que se pidió
-  console.log("Temperatura:", await climaAPI.obtenerTemperatura(lat, lon));
-  console.log("Sensación térmica:", await climaAPI.obtenerSensacionTermica(lat, lon));
-  console.log("Descripción:", await climaAPI.obtenerDescripcion(lat, lon));
-  console.log("Nubosidad:", await climaAPI.obtenerNubosidad(lat, lon));
-  console.log("Salida del sol:", await climaAPI.obtenerSalidaDelSol(lat, lon));
-  console.log("Puesta del sol:", await climaAPI.obtenerPuestaDelSol(lat, lon));
-
-  
-// Pruebas de las nuevas funciones W
-  console.log("Velocidad del viento:", await climaAPI.obtenerVelocidadViento(lat, lon)); // W
-  console.log("Dirección del viento:", await climaAPI.obtenerDireccionViento(lat, lon)); // W
-  console.log("Índice UV:", await climaAPI.obtenerIndiceUV(lat, lon)); // W
-
-  //PRUEBAS FUNCIONES - CARLOS
-console.log("Humedad:", await climaAPI.obtenerHumedad(lat, lon));
-console.log("Presión atmosférica:", await climaAPI.obtenerPresion(lat, lon));
-console.log("Visibilidad:", await climaAPI.obtenerVisibilidad(lat, lon)); // Asegúrate de haber agregado 'visibilidad' correctamente al return
-
-//PRUEBA DE MANEJADOR DE ERRORES - GALDINO
-console.log("=== Prueba con coordenadas inválidas ===");
-await climaAPI.manejarErrorCoordenadas("abc", null); // probar error de tipo
-await climaAPI.manejarErrorCoordenadas(150, -200);  // probar error de rango
-
-
-})();
+  try {
+    const datosClima = await climaAPI.obtenerDatosClimaticosPorCoordenadas(lat, lon);
+    console.log("=== Datos del Clima en Ciudad Mante, Tamaulipas ===");
+    console.log(datosClima);
+  } catch (error) {
+    console.error("Error:", error.message);
+  }
+})();*/
