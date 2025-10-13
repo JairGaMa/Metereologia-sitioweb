@@ -93,22 +93,3 @@ class ClimaWeatherbit {
     }
   }
 }
-
-// === PRUEBA ===
-/*
-(async () => {
-  const apiKey = "4deb71f7508d4e23a10d807f9fa5ecfa";
-  const climaAPI = new ClimaWeatherbit(apiKey);
-
-  // Ciudad Mante, Tamaulipas
-  const lat = 22.7411;
-  const lon = -98.9736;
-
-  try {
-    const datosClima = await climaAPI.obtenerDatosClimaticosPorCoordenadas(lat, lon);
-    console.log("=== Datos del Clima en Ciudad Mante, Tamaulipas ===");
-    console.log(datosClima);
-  } catch (error) {
-    console.error("Error:", error.message);
-  }
-})();*/
