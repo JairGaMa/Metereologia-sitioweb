@@ -33,8 +33,12 @@ Este proyecto está desarrollado con tecnologías web estándar y un framework C
 - [Brayan Jair Garcia Mayorga (JairGaMa)](https://github.com/JairGaMa)  
 - [Luis Angel Montoya Garza (luisangelmg11)](https://github.com/luisangelmg11)
 - [Simon Alejandro Martínez Morato (Alejandro-Morato)](https://github.com/Alejandro-Morato)
-- 
-- 
+- [Julia Guadalupe Camacho Garcia](https://github.com/juliiagpecamachogarcia)
+- [Wendy Itzel Ramirez Vazquez](https://github.com/Wendylandia15)
+- [Galdino Enriquez Hernández](https://github.com/GnoEnrqzz)
+- [Carlos Michel Olvera Padron](https://github.com/stal4muerte)
+- [Alison Michelle Rueda Martinez](https://github.com/alisonrueda)
+- [Mia Flores Hernndez](https://github.com/Luna8900)
 
 ---
 
