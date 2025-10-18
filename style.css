@@ -1,0 +1,63 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e6f2f5;
+    margin: 0;
+    padding: 0;
+}
+.encabezado {
+    background-color: #3aa6b9;
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+}
+.tarjeta {
+    background-color: #ffffff;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+.seccion-busqueda h2,
+.info-clima h2,
+.alerta h3 {
+    color: #3a4d53;
+}
+.etiqueta {
+    font-weight: bold;
+}
+.campo-lista {
+    padding: 8px;
+    width: 70%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.boton {
+    padding: 8px 15px;
+    background-color: #3aa6b9;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.boton:hover {
+    background-color: #2a889a;
+}
+.alerta {
+    background-color: #fff4f4;
+    border-left: 4px solid #e57373;
+}
+.mensaje-error {
+    color: #c62828;
+}
+.info-clima p {
+    margin: 8px 0;
+}
+.pie {
+    text-align: center;
+    padding: 10px;
+    background-color: #3aa6b9;
+    color: white;
+    font-size: 14px;
+}

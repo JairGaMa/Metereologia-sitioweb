@@ -6,9 +6,93 @@
     <title>Metereologia</title>
 
     <!-- Vincular el archivo CSS -->
-    <link rel="stylesheet" href="estilos.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+    <!--Encabezado-->
+    <header class="encabezado">
+        <h1>Metereologia de Tamaulipas</h1>
+    </header>
+     <!-- Sección de búsqueda (no me dejo poner los estilos T-T) -->
+    <section class="tarjeta seccion-busqueda">
+        <h2>Búsqueda de Ciudad</h2>
+        <label for="ciudad" class="etiqueta">Selecciona una ciudad:</label><br><br>
+        <input list="lista-ciudades" id="ciudad" class="campo-lista" placeholder="Escribe o selecciona una ciudad">    
+        <datalist id="lista-ciudades">
+            <option value="Abasolo">
+            <option value="Aldama">
+            <option value="Altamira">
+            <option value="Antiguo Morelos">
+            <option value="Burgos">
+            <option value="Bustamante">
+            <option value="Camargo">
+            <option value="Casas">
+            <option value="Ciudad Madero">
+            <option value="Ciudad Victoria">
+            <option value="Cruillas">
+            <option value="El Mante">
+            <option value="Gómez Farías">
+            <option value="González">
+            <option value="Güémez">
+            <option value="Guerrero">
+            <option value="Gustavo Díaz Ordaz">
+            <option value="Hidalgo">
+            <option value="Jaumave">
+            <option value="Jiménez">
+            <option value="Llera">
+            <option value="Mainero">
+            <option value="Matamoros">
+            <option value="Méndez">
+            <option value="Mier">
+            <option value="Miguel Alemán">
+            <option value="Miquihuana">
+            <option value="Nuevo Laredo">
+            <option value="Nuevo Morelos">
+            <option value="Ocampo">
+            <option value="Padilla">
+            <option value="Palmillas">
+            <option value="Reynosa">
+            <option value="Río Bravo">
+            <option value="San Carlos">
+            <option value="San Fernando">
+            <option value="San Nicolás">
+            <option value="Soto la Marina">
+            <option value="Tampico">
+            <option value="Tula">
+            <option value="Valle Hermoso">
+            <option value="Victoria">
+            <option value="Villagrán">
+            <option value="Xicoténcatl">
+        </datalist>
+        <button id="btnBuscar" class="boton">Buscar</button>
+    </section>
+
+    <!-- Sección de alertas -->
+    <section class="tarjeta alerta">
+        <h3>Alertas / Mensajes</h3>
+        <p id="mensaje-error" class="mensaje-error">Aquí aparecerán los errores o mensajes importantes.</p>
+    </section>
+
+    <!-- Sección de información meteorológica -->
+    <section class="tarjeta info-clima">
+        <h2>Información Meteorológica</h2>
+        <p><strong>Temperatura:</strong> <span id="temp">--</span> °C</p>
+        <p><strong>Sensación térmica:</strong> <span id="sensacion">--</span> °C</p>
+        <p><strong>Descripción del clima:</strong> <span id="descripcion">--</span></p>
+        <p><strong>Humedad:</strong> <span id="humedad">--</span> %</p>
+        <p><strong>Presión:</strong> <span id="presion">--</span> hPa</p>
+        <p><strong>Velocidad del viento:</strong> <span id="vientoVel">--</span> km/h</p>
+        <p><strong>Dirección del viento:</strong> <span id="vientoDir">--</span></p>
+        <p><strong>Índice UV:</strong> <span id="uv">--</span></p>
+        <p><strong>Nubosidad:</strong> <span id="nubosidad">--</span> %</p>
+        <p><strong>Salida del sol:</strong> <span id="amanecer">--</span></p>
+        <p><strong>Puesta del sol:</strong> <span id="atardecer">--</span></p>
+    </section>
+
+    <footer class="pie">
+        <p>© 2025 Metereologia de Tamaulipas</p>
+    </footer>
 
     <!-- Vinculación con el codigo javascript -->
     <script src="Conexion.JS"></script>
