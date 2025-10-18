@@ -44,6 +44,15 @@ body {
 .boton:hover {
     background-color: #2a889a;
 }
+.boton-borrar {
+    background-color: #d9534f; 
+}
+.boton-borrar:hover {
+    background-color: #c9302c; 
+}
+.boton + .boton {
+    margin-left: 10px;
+}
 .alerta {
     background-color: #fff4f4;
     border-left: 4px solid #e57373;
