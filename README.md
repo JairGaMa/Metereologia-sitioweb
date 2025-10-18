@@ -30,9 +30,9 @@ Este proyecto está desarrollado con tecnologías web estándar y un framework C
 
 ## Colaboradores
 
-- [Brayan Jair Garcia Mayorga (JairGaMa)](https://github.com/JairGaMa)  
-- [Luis Angel Montoya Garza (luisangelmg11)](https://github.com/luisangelmg11)
-- [Simon Alejandro Martínez Morato (Alejandro-Morato)](https://github.com/Alejandro-Morato)
+- [Brayan Jair Garcia Mayorga](https://github.com/JairGaMa)  
+- [Luis Angel Montoya Garza](https://github.com/luisangelmg11)
+- [Simon Alejandro Martínez Morato](https://github.com/Alejandro-Morato)
 - [Julia Guadalupe Camacho Garcia](https://github.com/juliiagpecamachogarcia)
 - [Wendy Itzel Ramirez Vazquez](https://github.com/Wendylandia15)
 - [Galdino Enriquez Hernández](https://github.com/GnoEnrqzz)
