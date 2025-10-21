@@ -22,7 +22,7 @@ class ClimaWeatherbit {
   }
 
   // Obtener datos meteorológicos completos
-  async obtenerDatosClimaticosPorCoordenadas(latitud, longitud, idioma = "es") {
+  async obtenerDatosClimaticosPorCoordenadas(latitud, longitud, idioma = "es", ciudadSolicitada = null) {
     try {
       const datos = await this.obtenerClimaPorCoordenadas(latitud, longitud, idioma);
       if (!datos || !datos.data || !Array.isArray(datos.data) || datos.data.length === 0) {
@@ -49,9 +49,28 @@ class ClimaWeatherbit {
       const salidaSol = convertirAHoraLocalMexico(clima.sunrise, clima.ob_time);
       const puestaSol = convertirAHoraLocalMexico(clima.sunset, clima.ob_time);
 
+      // Verificar si la ciudad obtenida coincide con la solicitada
+      let esCiudadCorrecta = true;
+      if (ciudadSolicitada) {
+        // Normalizar ambos strings (quitar acentos, espacios, convertir a minúsculas)
+        const normalizar = (texto) => {
+          return texto
+            .toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .replace(/\s+/g, "");
+        };
+
+        const ciudadSolNorm = normalizar(ciudadSolicitada);
+        const ciudadObtNorm = normalizar(clima.city_name);
+
+        // Comparar si son similares
+        esCiudadCorrecta = ciudadObtNorm.includes(ciudadSolNorm) || ciudadSolNorm.includes(ciudadObtNorm);
+      }
+
       return {
         ciudad: clima.city_name,
-        temperatura: `${clima.temp.toFixed(1)} °C`,
+        temperatura: `${clima.temp.toFixed(1)}`,
         sensacion_termica: `${clima.app_temp.toFixed(1)} °C`,
         descripcion: clima.weather.description,
         humedad: `${clima.rh}%`,
@@ -61,7 +80,9 @@ class ClimaWeatherbit {
         indice_uv: clima.uv,
         nubosidad: `${clima.clouds}%`,
         salida_sol: salidaSol,
-        puesta_sol: puestaSol
+        puesta_sol: puestaSol,
+        ciudadSolicitada: ciudadSolicitada,
+        esCiudadCorrecta: esCiudadCorrecta
       };
     } catch (error) {
       throw new Error(`Error al obtener datos climáticos por coordenadas: ${error.message}`);

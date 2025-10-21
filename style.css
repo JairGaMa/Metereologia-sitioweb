@@ -70,3 +70,32 @@ body {
     color: white;
     font-size: 14px;
 }
+
+.form-control:focus {
+    border-color: #3aa6b9;
+    box-shadow: 0 0 0 0.2rem rgba(58, 166, 185, 0.25);
+}
+
+
+.alerta h3 {
+    color: #721c24;
+    margin-bottom: 10px;
+}
+
+.alerta .bi-exclamation-triangle {
+    color: #dc3545;
+}
+
+/* Estilos para advertencias (amarillas/naranjas) */
+
+
+.advertencia h3 {
+    color: #856404;
+    margin-bottom: 10px;
+}
+
+.advertencia .bi-exclamation-triangle {
+    color: #ffc107;
+}
+
+/* Mensaje de error/advertencia */

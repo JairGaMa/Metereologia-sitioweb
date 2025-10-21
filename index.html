@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Metereologia</title>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- Vincular el archivo CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
@@ -24,19 +26,19 @@
             <option value="Aldama">
             <option value="Altamira">
             <option value="Antiguo Morelos">
-            <option value="Burgos">
+            <option value="Linares">
             <option value="Bustamante">
             <option value="Camargo">
             <option value="Casas">
             <option value="Ciudad Madero">
             <option value="Ciudad Victoria">
-            <option value="Cruillas">
-            <option value="El Mante">
+            
+            <option value="Ciudad Mante">
             <option value="Gómez Farías">
             <option value="González">
             <option value="Güémez">
             <option value="Guerrero">
-            <option value="Gustavo Díaz Ordaz">
+            <option value="Ciudad Díaz Ordaz">
             <option value="Hidalgo">
             <option value="Jaumave">
             <option value="Jiménez">
@@ -49,9 +51,9 @@
             <option value="Miquihuana">
             <option value="Nuevo Laredo">
             <option value="Nuevo Morelos">
-            <option value="Ocampo">
+            
             <option value="Padilla">
-            <option value="Palmillas">
+            
             <option value="Reynosa">
             <option value="Río Bravo">
             <option value="San Carlos">
@@ -69,26 +71,99 @@
         <button id="btnBorrar" class="boton boton-borrar">Borrar</button>
     </section>
 
-    <!-- Sección de alertas -->
-    <section class="tarjeta alerta">
-        <h3>Alertas / Mensajes</h3>
-        <p id="mensaje-error" class="mensaje-error">Aquí aparecerán los errores o mensajes importantes.</p>
+      <!-- Sección de alertas -->
+    <section class="tarjeta alerta" id="alertSection" style="display: none;">
+        <h3><i class="bi bi-exclamation-triangle"></i> Alertas / Mensajes</h3>
+        <p id="mensaje-error" class="mensaje-error"></p>
     </section>
 
+
     <!-- Sección de información meteorológica -->
-    <section class="tarjeta info-clima">
-        <h2>Información Meteorológica</h2>
-        <p><strong>Temperatura:</strong> <span id="temp">--</span> °C</p>
-        <p><strong>Sensación térmica:</strong> <span id="sensacion">--</span> °C</p>
-        <p><strong>Descripción del clima:</strong> <span id="descripcion">--</span></p>
-        <p><strong>Humedad:</strong> <span id="humedad">--</span> %</p>
-        <p><strong>Presión:</strong> <span id="presion">--</span> hPa</p>
-        <p><strong>Velocidad del viento:</strong> <span id="vientoVel">--</span> km/h</p>
-        <p><strong>Dirección del viento:</strong> <span id="vientoDir">--</span></p>
-        <p><strong>Índice UV:</strong> <span id="uv">--</span></p>
-        <p><strong>Nubosidad:</strong> <span id="nubosidad">--</span> %</p>
-        <p><strong>Salida del sol:</strong> <span id="amanecer">--</span></p>
-        <p><strong>Puesta del sol:</strong> <span id="atardecer">--</span></p>
+    <section class="tarjeta info-clima" id="climaInfo" style="display: none;">
+        <h2 class="mb-4"><i class="bi bi-thermometer-half"></i> Información Meteorológica</h2>
+        
+        <!-- Tarjeta principal del clima -->
+        <div class="clima-card">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center">
+                    <i class="bi bi-cloud-sun icono-clima"></i>
+                    <div class="clima-principal" id="temp">--°C</div>
+                    <p class="fs-5" id="descripcion">--</p>
+                </div>
+                <div class="col-md-6">
+                    <h3 id="ciudadNombre">--</h3>
+                    <p class="mb-1"><i class="bi bi-thermometer"></i> Sensación térmica: <strong id="sensacion">--</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Datos detallados -->
+        <div class="row g-3">
+            <div class="col-md-6">
+                <div class="card dato-clima">
+                    <div class="card-body">
+                        <h6 class="card-title"><i class="bi bi-droplet"></i> Humedad</h6>
+                        <p class="card-text fs-4" id="humedad">--%</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card dato-clima">
+                    <div class="card-body">
+                        <h6 class="card-title"><i class="bi bi-speedometer2"></i> Presión</h6>
+                        <p class="card-text fs-4" id="presion">-- hPa</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card dato-clima">
+                    <div class="card-body">
+                        <h6 class="card-title"><i class="bi bi-wind"></i> Velocidad del viento</h6>
+                        <p class="card-text fs-4" id="vientoVel">-- km/h</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card dato-clima">
+                    <div class="card-body">
+                        <h6 class="card-title"><i class="bi bi-compass"></i> Dirección del viento</h6>
+                        <p class="card-text fs-4" id="vientoDir">--</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card dato-clima">
+                    <div class="card-body">
+                        <h6 class="card-title"><i class="bi bi-sun"></i> Índice UV</h6>
+                        <p class="card-text fs-4" id="uv">--</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card dato-clima">
+                    <div class="card-body">
+                        <h6 class="card-title"><i class="bi bi-clouds"></i> Nubosidad</h6>
+                        <p class="card-text fs-4" id="nubosidad">--%</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card dato-clima">
+                    <div class="card-body">
+                        <h6 class="card-title"><i class="bi bi-sunrise"></i> Salida del sol</h6>
+                        <p class="card-text fs-4" id="amanecer">--</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card dato-clima">
+                    <div class="card-body">
+                        <h6 class="card-title"><i class="bi bi-sunset"></i> Puesta del sol</h6>
+                        <p class="card-text fs-4" id="atardecer">--</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
     <footer class="pie">
@@ -97,5 +172,9 @@
 
     <!-- Vinculación con el codigo javascript -->
     <script src="Conexion.JS"></script>
+    <script src="app.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
