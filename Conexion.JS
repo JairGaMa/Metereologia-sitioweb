@@ -82,7 +82,8 @@ class ClimaWeatherbit {
         salida_sol: salidaSol,
         puesta_sol: puestaSol,
         ciudadSolicitada: ciudadSolicitada,
-        esCiudadCorrecta: esCiudadCorrecta
+        esCiudadCorrecta: esCiudadCorrecta,
+        icon: clima.weather.icon
       };
     } catch (error) {
       throw new Error(`Error al obtener datos climáticos por coordenadas: ${error.message}`);
