@@ -118,7 +118,8 @@ function actualizarInterfaz(datos) {
         uv: document.getElementById('uv'),
         nubosidad: document.getElementById('nubosidad'),
         amanecer: document.getElementById('amanecer'),
-        atardecer: document.getElementById('atardecer')
+        atardecer: document.getElementById('atardecer'),
+        iconoClima: document.getElementById('iconoClima')
     };
 
     // Verificar que todos los elementos existen
@@ -141,6 +142,12 @@ function actualizarInterfaz(datos) {
     elementos.nubosidad.textContent = datos.nubosidad;
     elementos.amanecer.textContent = datos.salida_sol;
     elementos.atardecer.textContent = datos.puesta_sol;
+
+    if (elementos.iconoClima && datos.icon) {
+        elementos.iconoClima.src = `https://www.weatherbit.io/static/img/icons/${datos.icon}.png`;
+        elementos.iconoClima.alt = `Ícono de ${datos.descripcion}`;
+        elementos.iconoClima.style.display = 'block';  // Asegura que se muestre
+    }
     
     if (climaInfo) {
         climaInfo.style.display = 'block';
@@ -198,6 +205,11 @@ function limpiarDatos() {
     }
     if (climaInfo) {
         climaInfo.style.display = 'none';
+    }
+    const iconoClima = document.getElementById('iconoClima');
+    if (iconoClima) {
+        iconoClima.src = '';
+        iconoClima.style.display = 'none';
     }
     ocultarError();
 }
