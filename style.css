@@ -98,4 +98,14 @@ body {
     color: #ffc107;
 }
 
+#iconoClima {
+    display: none;
+    width: 64px;
+    height: 64px;
+    margin: 10px auto;
+}
+
+#iconoClima[src=""] {
+    display: none;  
+}
 /* Mensaje de error/advertencia */
