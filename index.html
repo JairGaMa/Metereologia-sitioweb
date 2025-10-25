@@ -1,180 +1,276 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Metereologia</title>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Vincular el archivo CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-
-    <!--Encabezado-->
-    <header class="encabezado">
-        <h1>Metereologia de Tamaulipas</h1>
+    <!-- Encabezado -->
+    <header class="encabezado text-center">
+        <div class="container">
+            <h1><i class="bi bi-cloud-sun"></i> Meteorología de Tamaulipas</h1>
+        </div>
     </header>
-     <!-- Sección de búsqueda (no me dejo poner los estilos T-T) -->
-    <section class="tarjeta seccion-busqueda">
-        <h2>Búsqueda de Ciudad</h2>
-        <label for="ciudad" class="etiqueta">Selecciona una ciudad:</label><br><br>
-        <input list="lista-ciudades" id="ciudad" class="campo-lista" placeholder="Escribe o selecciona una ciudad">    
-        <datalist id="lista-ciudades">
-            <option value="Abasolo">
-            <option value="Aldama">
-            <option value="Altamira">
-            <option value="Antiguo Morelos">
-            <option value="Linares">
-            <option value="Bustamante">
-            <option value="Camargo">
-            <option value="Casas">
-            <option value="Ciudad Madero">
-            <option value="Ciudad Victoria">
-            
-            <option value="Ciudad Mante">
-            <option value="Gómez Farías">
-            <option value="González">
-            <option value="Güémez">
-            <option value="Guerrero">
-            <option value="Ciudad Díaz Ordaz">
-            <option value="Hidalgo">
-            <option value="Jaumave">
-            <option value="Jiménez">
-            <option value="Llera">
-            <option value="Mainero">
-            <option value="Matamoros">
-            <option value="Méndez">
-            <option value="Mier">
-            <option value="Miguel Alemán">
-            <option value="Miquihuana">
-            <option value="Nuevo Laredo">
-            <option value="Nuevo Morelos">
-            
-            <option value="Padilla">
-            
-            <option value="Reynosa">
-            <option value="Río Bravo">
-            <option value="San Carlos">
-            <option value="San Fernando">
-            <option value="San Nicolás">
-            <option value="Soto la Marina">
-            <option value="Tampico">
-            <option value="Tula">
-            <option value="Valle Hermoso">
-            <option value="Victoria">
-            <option value="Villagrán">
-            <option value="Xicoténcatl">
-        </datalist>
-        <button id="btnBuscar" class="boton">Buscar</button>
-        <button id="btnBorrar" class="boton boton-borrar">Borrar</button>
-    </section>
 
-      <!-- Sección de alertas -->
-    <section class="tarjeta alerta" id="alertSection" style="display: none;">
-        <h3><i class="bi bi-exclamation-triangle"></i> Alertas / Mensajes</h3>
-        <p id="mensaje-error" class="mensaje-error"></p>
-    </section>
-
-
-    <!-- Sección de información meteorológica -->
-    <section class="tarjeta info-clima" id="climaInfo" style="display: none;">
-        <h2 class="mb-4"><i class="bi bi-thermometer-half"></i> Información Meteorológica</h2>
-        
-        <!-- Tarjeta principal del clima -->
-        <div class="clima-card">
-            <div class="row align-items-center">
-                <div class="col-md-6 text-center">
-                    <img id="iconoClima" src="" alt="Ícono del clima" style="display: none; width: 64px; height: 64px; margin: 10px auto;">
-                    <div class="clima-principal" id="temp">--°C</div>
-                    <p class="fs-5" id="descripcion">--</p>
+    <div class="content-wrapper">
+        <div class="container py-4">
+            <!-- Sección de búsqueda -->
+            <section class="tarjeta p-4 mb-4">
+                <h2 class="text-primary mb-4"><i class="bi bi-search"></i> Búsqueda de Ciudad</h2>
+                <div class="row g-3">
+                    <div class="col-12">
+                        <label for="ciudad" class="form-label fw-bold">Selecciona una ciudad:</label>
+                        <input list="lista-ciudades" id="ciudad" class="form-control"
+                            placeholder="Escribe o selecciona una ciudad">
+                        <datalist id="lista-ciudades">
+                            <option value="Abasolo">
+                            <option value="Aldama">
+                            <option value="Altamira">
+                            <option value="Antiguo Morelos">
+                            <option value="Linares">
+                            <option value="Bustamante">
+                            <option value="Camargo">
+                            <option value="Casas">
+                            <option value="Ciudad Madero">
+                            <option value="Ciudad Victoria">
+                            <option value="Ciudad Mante">
+                            <option value="Gómez Farías">
+                            <option value="González">
+                            <option value="Güémez">
+                            <option value="Guerrero">
+                            <option value="Ciudad Díaz Ordaz">
+                            <option value="Hidalgo">
+                            <option value="Jaumave">
+                            <option value="Jiménez">
+                            <option value="Llera">
+                            <option value="Mainero">
+                            <option value="Matamoros">
+                            <option value="Méndez">
+                            <option value="Mier">
+                            <option value="Miguel Alemán">
+                            <option value="Miquihuana">
+                            <option value="Nuevo Laredo">
+                            <option value="Nuevo Morelos">
+                            <option value="Padilla">
+                            <option value="Reynosa">
+                            <option value="Río Bravo">
+                            <option value="San Carlos">
+                            <option value="San Fernando">
+                            <option value="San Nicolás">
+                            <option value="Soto la Marina">
+                            <option value="Tampico">
+                            <option value="Tula">
+                            <option value="Valle Hermoso">
+                            <option value="Victoria">
+                            <option value="Villagrán">
+                            <option value="Xicoténcatl">
+                        </datalist>
+                    </div>
+                    <div class="col-12">
+                        <button id="btnBuscar" class="btn btn-primary-custom btn-lg me-2">
+                            <i class="bi bi-search"></i> Buscar
+                        </button>
+                        <button id="btnBorrar" class="btn btn-danger-custom btn-lg">
+                            <i class="bi bi-x-circle"></i> Borrar
+                        </button>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <h3 id="ciudadNombre">--</h3>
-                    <p class="mb-1"><i class="bi bi-thermometer"></i> Sensación térmica: <strong id="sensacion">--</strong></p>
+            </section>
+
+            <!-- Sección de alertas -->
+            <section class="tarjeta alerta p-4 mb-4" id="alertSection" style="display: none;">
+                <h3><i class="bi bi-exclamation-triangle"></i> Alertas / Mensajes</h3>
+                <p id="mensaje-error" class="mensaje-error mb-0"></p>
+            </section>
+
+            <!-- Sección de información meteorológica -->
+            <section class="tarjeta p-4 mb-4" id="climaInfo" style="display: none;">
+                <h2 class="mb-4 text-primary"><i class="bi bi-thermometer-half"></i> Información Meteorológica</h2>
+
+                <!-- Tarjeta principal del clima -->
+                <div class="clima-card">
+                    <div class="row align-items-center">
+                        <div class="col-md-6 text-center mb-3 mb-md-0">
+                            <img id="iconoClima" src="" alt="Ícono del clima"
+                                style="display: none; width: 80px; height: 80px;">
+                            <div class="clima-principal" id="temp">--°C</div>
+                            <p class="fs-4 text-muted" id="descripcion">--</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h3 class="text-primary mb-3" id="ciudadNombre">--</h3>
+                            <p class="mb-2"><i class="bi bi-thermometer"></i> Sensación térmica: <strong
+                                    id="sensacion">--</strong></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Datos detallados -->
+                <div class="row g-3">
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="card dato-clima h-100">
+                            <div class="card-body text-center">
+                                <h6 class="card-title"><i class="bi bi-droplet"></i> Humedad</h6>
+                                <p class="card-text fs-4 fw-bold mb-0" id="humedad">--%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="card dato-clima h-100">
+                            <div class="card-body text-center">
+                                <h6 class="card-title"><i class="bi bi-speedometer2"></i> Presión</h6>
+                                <p class="card-text fs-4 fw-bold mb-0" id="presion">-- hPa</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="card dato-clima h-100">
+                            <div class="card-body text-center">
+                                <h6 class="card-title"><i class="bi bi-wind"></i> Vel. Viento</h6>
+                                <p class="card-text fs-4 fw-bold mb-0" id="vientoVel">-- km/h</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="card dato-clima h-100">
+                            <div class="card-body text-center">
+                                <h6 class="card-title"><i class="bi bi-compass"></i> Dir. Viento</h6>
+                                <p class="card-text fs-4 fw-bold mb-0" id="vientoDir">--</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="card dato-clima h-100">
+                            <div class="card-body text-center">
+                                <h6 class="card-title"><i class="bi bi-sun"></i> Índice UV</h6>
+                                <p class="card-text fs-4 fw-bold mb-0" id="uv">--</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="card dato-clima h-100">
+                            <div class="card-body text-center">
+                                <h6 class="card-title"><i class="bi bi-clouds"></i> Nubosidad</h6>
+                                <p class="card-text fs-4 fw-bold mb-0" id="nubosidad">--%</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="card dato-clima h-100">
+                            <div class="card-body text-center">
+                                <h6 class="card-title"><i class="bi bi-sunrise"></i> Amanecer</h6>
+                                <p class="card-text fs-4 fw-bold mb-0" id="amanecer">--</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <div class="card dato-clima h-100">
+                            <div class="card-body text-center">
+                                <h6 class="card-title"><i class="bi bi-sunset"></i> Atardecer</h6>
+                                <p class="card-text fs-4 fw-bold mb-0" id="atardecer">--</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Botón de contribuyentes flotante -->
+    <button type="button" class="btn btn-primary-custom btn-contributors" data-bs-toggle="modal"
+        data-bs-target="#contributorsModal">
+        <i class="bi bi-people-fill"></i> Contribuyentes
+    </button>
+
+    <!-- Modal de contribuyentes -->
+    <div class="modal fade" id="contributorsModal" tabindex="-1" aria-labelledby="contributorsModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="contributorsModalLabel">
+                        <i class="bi bi-people-fill"></i> Contribuyentes del Proyecto
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body py-4">
+                    <p class="mb-4 text-muted text-center">Este proyecto fue desarrollado por:</p>
+
+                    <!-- Scrum Master -->
+                    <div class="mb-4">
+                        <h6 class="text-primary mb-3"><i class="bi bi-bullseye"></i> Scrum Master</h6>
+                        <div class="d-flex flex-wrap justify-content-center">
+                            <span class="contributor-badge badge-scrum">
+                                <i class="bi bi-person-gear"></i> Ramirez Vazquez Wendy Itzel
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Product Owner -->
+                    <div class="mb-4">
+                        <h6 class="text-warning mb-3"><i class="bi bi-briefcase-fill"></i> Product Owner</h6>
+                        <div class="d-flex flex-wrap justify-content-center">
+                            <span class="contributor-badge badge-owner">
+                                <i class="bi bi-person-badge-fill"></i> Garcia Mayorga Brayan Jair
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Developers -->
+                    <div class="mb-3">
+                        <h6 class="text-success mb-3"><i class="bi bi-code-slash"></i> Developers</h6>
+                        <div class="d-flex flex-wrap justify-content-center">
+                            <span class="contributor-badge badge-developer">
+                                <i class="bi bi-person"></i> Camacho Garcia Julia Guadalupe
+                            </span>
+                            <span class="contributor-badge badge-developer">
+                                <i class="bi bi-person"></i> Enríquez Hernandez Galdino
+                            </span>
+                            <span class="contributor-badge badge-developer">
+                                <i class="bi bi-person"></i> Olvera Padrón Carlos Michel
+                            </span>
+                            <span class="contributor-badge badge-developer">
+                                <i class="bi bi-person"></i> Montoya Garza Luis Angel
+                            </span>
+                            <span class="contributor-badge badge-developer">
+                                <i class="bi bi-person"></i> Rueda Martinez Alison Michelle
+                            </span>
+                            <span class="contributor-badge badge-developer">
+                                <i class="bi bi-person"></i> Martínez Morato Simon Alejandro
+                            </span>
+                            <span class="contributor-badge badge-developer">
+                                <i class="bi bi-person"></i> Flores Hernández Mia
+                            </span>
+                            <span class="contributor-badge badge-developer">
+                                <i class="bi bi-person"></i> Sanchez Cruz Guillermo de Jesús
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Datos detallados -->
-        <div class="row g-3">
-            <div class="col-md-6">
-                <div class="card dato-clima">
-                    <div class="card-body">
-                        <h6 class="card-title"><i class="bi bi-droplet"></i> Humedad</h6>
-                        <p class="card-text fs-4" id="humedad">--%</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card dato-clima">
-                    <div class="card-body">
-                        <h6 class="card-title"><i class="bi bi-speedometer2"></i> Presión</h6>
-                        <p class="card-text fs-4" id="presion">-- hPa</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card dato-clima">
-                    <div class="card-body">
-                        <h6 class="card-title"><i class="bi bi-wind"></i> Velocidad del viento</h6>
-                        <p class="card-text fs-4" id="vientoVel">-- km/h</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card dato-clima">
-                    <div class="card-body">
-                        <h6 class="card-title"><i class="bi bi-compass"></i> Dirección del viento</h6>
-                        <p class="card-text fs-4" id="vientoDir">--</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card dato-clima">
-                    <div class="card-body">
-                        <h6 class="card-title"><i class="bi bi-sun"></i> Índice UV</h6>
-                        <p class="card-text fs-4" id="uv">--</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card dato-clima">
-                    <div class="card-body">
-                        <h6 class="card-title"><i class="bi bi-clouds"></i> Nubosidad</h6>
-                        <p class="card-text fs-4" id="nubosidad">--%</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card dato-clima">
-                    <div class="card-body">
-                        <h6 class="card-title"><i class="bi bi-sunrise"></i> Salida del sol</h6>
-                        <p class="card-text fs-4" id="amanecer">--</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card dato-clima">
-                    <div class="card-body">
-                        <h6 class="card-title"><i class="bi bi-sunset"></i> Puesta del sol</h6>
-                        <p class="card-text fs-4" id="atardecer">--</p>
-                    </div>
-                </div>
-            </div>
+    <!-- Footer fijo -->
+    <footer class="pie text-center">
+        <div class="container">
+            <p class="mb-0">© 2025 Meteorología de Tamaulipas</i></p>
         </div>
-    </section>
-
-    <footer class="pie">
-        <p>© 2025 Metereologia de Tamaulipas</p>
     </footer>
 
-    <!-- Vinculación con el codigo javascript -->
+    <!-- Scripts -->
     <script src="Conexion.JS"></script>
     <script src="app.js"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
-
 </body>
+
 </html>
