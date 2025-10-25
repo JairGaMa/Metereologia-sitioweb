@@ -1,111 +1,241 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #e6f2f5;
-    margin: 0;
-    padding: 0;
-}
-.encabezado {
-    background-color: #3aa6b9;
-    color: white;
-    text-align: center;
-    padding: 15px 0;
-}
-.tarjeta {
-    background-color: #ffffff;
-    margin: 20px auto;
-    padding: 20px;
-    border-radius: 10px;
-    width: 80%;
-    max-width: 600px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-}
-.seccion-busqueda h2,
-.info-clima h2,
-.alerta h3 {
-    color: #3a4d53;
-}
-.etiqueta {
-    font-weight: bold;
-}
-.campo-lista {
-    padding: 8px;
-    width: 70%;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-.boton {
-    padding: 8px 15px;
-    background-color: #3aa6b9;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-.boton:hover {
-    background-color: #2a889a;
-}
-.boton-borrar {
-    background-color: #d9534f; 
-}
-.boton-borrar:hover {
-    background-color: #c9302c; 
-}
-.boton + .boton {
-    margin-left: 10px;
-}
-.alerta {
-    background-color: #fff4f4;
-    border-left: 4px solid #e57373;
-}
-.mensaje-error {
-    color: #c62828;
-}
-.info-clima p {
-    margin: 8px 0;
-}
-.pie {
-    text-align: center;
-    padding: 10px;
-    background-color: #3aa6b9;
-    color: white;
-    font-size: 14px;
-}
+/* Variables de color personalizadas */
+        :root {
+            --primary-color: #3aa6b9;
+            --primary-dark: #2a889a;
+            --danger-color: #d9534f;
+            --bg-light: #e6f2f5;
+        }
 
-.form-control:focus {
-    border-color: #3aa6b9;
-    box-shadow: 0 0 0 0.2rem rgba(58, 166, 185, 0.25);
-}
+        /* Animaciones personalizadas */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-.alerta h3 {
-    color: #721c24;
-    margin-bottom: 10px;
-}
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
 
-.alerta .bi-exclamation-triangle {
-    color: #dc3545;
-}
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
 
-/* Estilos para advertencias (amarillas/naranjas) */
+        /* Estilos globales */
+        html, body {
+            height: 100%;
+        }
 
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e6f2f5 0%, #c8e6ec 100%);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
 
-.advertencia h3 {
-    color: #856404;
-    margin-bottom: 10px;
-}
+        .content-wrapper {
+            flex: 1 0 auto;
+            padding-bottom: 60px;
+        }
 
-.advertencia .bi-exclamation-triangle {
-    color: #ffc107;
-}
+        /* Encabezado */
+        .encabezado {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #2a889a 100%);
+            color: white;
+            padding: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            animation: fadeInDown 0.6s ease-out;
+        }
 
-#iconoClima {
-    display: none;
-    width: 64px;
-    height: 64px;
-    margin: 10px auto;
-}
+        .encabezado h1 {
+            margin: 0;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
 
-#iconoClima[src=""] {
-    display: none;  
-}
-/* Mensaje de error/advertencia */
+        /* Tarjetas */
+        .tarjeta {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            animation: scaleIn 0.5s ease-out;
+        }
+
+        .tarjeta:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+        }
+
+        /* Botones */
+        .btn-primary-custom {
+            background-color: var(--primary-color);
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary-custom:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .btn-danger-custom {
+            background-color: var(--danger-color);
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-danger-custom:hover {
+            background-color: #c9302c;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        /* Campo de búsqueda */
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(58, 166, 185, 0.25);
+        }
+
+        /* Alertas */
+        .alerta {
+            background-color: #fff4f4;
+            border-left: 5px solid #e57373;
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        .alerta h3 {
+            color: #721c24;
+        }
+
+        .alerta .bi-exclamation-triangle {
+            color: #dc3545;
+            animation: pulse 2s infinite;
+        }
+
+        /* Tarjeta del clima */
+        .clima-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .clima-principal {
+            font-size: 4rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            animation: scaleIn 0.8s ease-out;
+        }
+
+        #iconoClima {
+            animation: scaleIn 0.7s ease-out;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+        }
+
+        /* Datos del clima */
+        .dato-clima {
+            border: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.7s ease-out;
+        }
+
+        .dato-clima:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .dato-clima .card-title {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        /* Footer fijo */
+        .pie {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #2a889a 100%);
+            color: white;
+            padding: 1.5rem 0;
+            flex-shrink: 0;
+            position: relative;
+            margin-top: auto;
+        }
+
+        /* Botón de contribuyentes */
+        .btn-contributors {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            z-index: 1000;
+            border-radius: 50px;
+            padding: 12px 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        /* Modal de contribuyentes */
+        .contributor-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            margin: 5px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #2a889a 100%);
+            color: white;
+            border-radius: 20px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .contributor-badge:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        /* Animación al mostrar secciones */
+        .show-animate {
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .clima-principal {
+                font-size: 3rem;
+            }
+            
+            .btn-contributors {
+                bottom: 70px;
+                right: 15px;
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
